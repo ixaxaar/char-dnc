@@ -35,7 +35,7 @@ Options:
 --nr_cells         Number of cells of the DNC          32
 --read_heads       Number of read heads                4
 --cell_size        Size of each DNC cell               32
---reset_experience Should we reset DNC values per minibatch? False
+--reset_experience Should we reset DNC values per minibatch? 0
 ```
 
 ## Generation

@@ -29,7 +29,7 @@ argparser.add_argument('--cuda', type=int, default=0)
 argparser.add_argument('--nr_cells', type=int, default=32)
 argparser.add_argument('--read_heads', type=int, default=4)
 argparser.add_argument('--cell_size', type=int, default=32)
-argparser.add_argument('--reset_experience', type=bool, default=False)
+argparser.add_argument('--reset_experience', type=str, default='no')
 args = argparser.parse_args()
 
 if args.cuda != -1:
@@ -89,7 +89,7 @@ if args.rnn_type == 'dnc':
       read_heads=args.read_heads,
       cell_size=args.cell_size,
       gpu_id=args.cuda,
-      reset_experience=args.reset_experience
+      reset_experience=(args.reset_experience == '1')
   )
 else:
   lm = CharLM(
@@ -111,6 +111,7 @@ loss_avg = 0
 
 try:
   print("Training for %d epochs..." % args.n_epochs)
+  print('With arguments', args)
   for epoch in tqdm(range(1, args.n_epochs + 1)):
     loss = train(*random_training_set(args.chunk_len, args.batch_size))
     loss_avg += loss

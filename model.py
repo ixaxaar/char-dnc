@@ -19,7 +19,8 @@ class CharLM(nn.Module):
       nr_cells=10,
       read_heads=4,
       cell_size=32,
-      gpu_id=-1
+      gpu_id=-1,
+      reset_experience=False
   ):
     super(CharLM, self).__init__()
     self.kind = rnn_type.lower()
@@ -31,6 +32,7 @@ class CharLM(nn.Module):
     self.read_heads = read_heads
     self.cell_size = cell_size
     self.gpu_id = gpu_id
+    self.reset_experience = reset_experience
 
     self.encoder = nn.Embedding(input_size, hidden_size)
     if self.kind == "gru":
@@ -46,8 +48,7 @@ class CharLM(nn.Module):
           read_heads=read_heads,
           cell_size=cell_size,
           batch_first=True,
-          gpu_id=self.gpu_id,
-          independent_linears=False
+          gpu_id=self.gpu_id
       )
       # register_nan_checks(self.rnn)
     self.decoder = nn.Linear(hidden_size, output_size)
