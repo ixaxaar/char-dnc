@@ -6,6 +6,7 @@ import torch.nn as nn
 from torch.autograd import Variable
 import argparse
 import os
+import math
 
 from tqdm import tqdm
 
@@ -117,8 +118,9 @@ try:
     loss_avg += loss
 
     if epoch % args.print_every == 0:
-      print('[%s (%d %d%%) %.4f]' % (time_since(start), epoch, epoch / args.n_epochs * 100, loss))
-      print(generate(lm, 'Wh', 100, cuda=args.cuda), '\n')
+      print('[%s (%d %d%%) with loss %.4f, perplexity %.4f]' %
+            (time_since(start), epoch, epoch / args.n_epochs * 100, loss, math.exp(loss)))
+      print(generate(lm, 'I am', 1000, cuda=args.cuda), '\n')
 
   print("Saving...")
   save()
