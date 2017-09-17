@@ -66,7 +66,7 @@ def eval(inp, target):
 
   for c in range(args.chunk_len):
     output, hidden = lm(inp[:, c], hidden)
-    loss += len(inp[:, c]) * criterion(output.view(args.batch_size, -1), target[:, c])
+    loss += criterion(output.view(args.batch_size, -1), target[:, c])
 
   lm.train()
   return loss.data[0] / args.chunk_len
